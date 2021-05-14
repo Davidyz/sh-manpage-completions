@@ -15,13 +15,20 @@ You can then take the files from `completions/$shell/` and use them according to
 - **Bash**: Source them in an initialization file (e.g. `~/.bashrc`)
 - **Zsh**: Add them to a directory in `$fpath`
 
+The Python script `genCompletion.py` tries to generate the completion files from
+all `man` pages and add relevant commands into `.zshrc` or `.bashrc`. **When you
+run this script, make sure that the working directory is the root directory of
+this repository.** There may be incompatibility issue with the line added to the
+`rc` files and your other config. Since this may vary on different machines, 
+you may need to debug on your own.
+
 ## Limitations
 
 Bash doesn't support descriptions in completions. There has been some [discussion about workarounds](https://stackoverflow.com/questions/7267185/bash-autocompletion-add-description-for-possible-completions). Two different strategies were implemented:
 
 1. Separate descriptions
 
-Consists on printing the completions with descriptions, before bash displays the completions again. It results in redundancy but doesn't break tab behaviour. Descriptions can be omitted like so:
+Consists on printing the completions with descriptions, before bash displays the completions again. It results in redundancy but doesn't break tab behavior. Descriptions can be omitted like so:
 
 ```
 BASH_NO_DESCRIPTIONS=1 ./run.sh /usr/share/man/man1/tar.1.gz
@@ -29,7 +36,7 @@ BASH_NO_DESCRIPTIONS=1 ./run.sh /usr/share/man/man1/tar.1.gz
 
 2. Filter through a selector
 
-You can use a fuzzy selector to extract the right option, containg both the completion and its description. No redundancy, but relies on an external application. Can be used like so:
+You can use a fuzzy selector to extract the right option, containing both the completion and its description. No redundancy, but relies on an external application. Can be used like so:
 
 ```
 BASH_USE_SELECTOR=1 ./run.sh /usr/share/man/man1/tar.1.gz
